@@ -39,8 +39,6 @@ const Register = () => {
             toast.error(`Image is required`)
             return;
         }
-
-
         const getImageUrl = await ImageUrl(image)
         try {
             const { user } = await createUser(email, password)
