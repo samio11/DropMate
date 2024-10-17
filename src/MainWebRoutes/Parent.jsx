@@ -11,7 +11,7 @@ const Parent = () => {
                 <Navbar></Navbar>
             </div>
             {/* Children */}
-            <div>
+            <div className='min-h-[calc(100vh-120px)]'>
                 <Outlet></Outlet>
             </div>
             {/* Footer */}
