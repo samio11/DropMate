@@ -59,11 +59,3 @@ Make sure you have the following installed on your system:
    git clone https://github.com/samio11/DropMate
    cd parcel-management-website
 
-
-
-cd server
-npm run dev
-Start the frontend:
-
-cd client
-npm run dev
