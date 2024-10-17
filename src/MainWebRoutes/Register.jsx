@@ -18,6 +18,29 @@ const Register = () => {
         const email = form.email.value;
         const password = form.password.value;
         const image = form.image.files[0];
+        //Validation
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+            toast.error(`Invalid email format`)
+            return;
+        }
+        if(!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password))
+        {
+            toast.error(`Invalid Password`)
+            return;
+        }
+
+        if(!name)
+        {
+            toast.error(`Name is required`)
+            return;
+        }
+        if(!image)
+        {
+            toast.error(`Image is required`)
+            return;
+        }
+
+
         const getImageUrl = await ImageUrl(image)
         try {
             const { user } = await createUser(email, password)
