@@ -7,7 +7,7 @@ const SectionTxt = ({headTxt,Desc}) => {
             <h2 className='text-sm md:text-3xl italic font-semibold text-[#6C63FF]'>{headTxt}</h2>
             {/* <hr className='w-[70%] mx-auto border-2 border-blue-800' /> */}
             <p className='text-xs md:text-sm text-gray-500 font-semibold'>{Desc}</p>
-            <Link className='btn btn-outline btn-primary' to={'/customer-parcel-book'}>Book a Parcel</Link>
+            <Link className='btn btn-outline btn-primary' to={'/dashboard'}>Book a Parcel</Link>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ContextProvider } from '../AllContext/ContextContainer';
 import toast from 'react-hot-toast';
 import useAxiosSecure, { axiosSecure } from '../Custom_Hooks/useAxiosSecure';
+import { axiosNormal } from '../Custom_Hooks/useAxios';
 
 const Login = () => {
     const { loginUser, googleLogin } = useContext(ContextProvider)
@@ -18,7 +19,7 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         const userRole = role;
-        console.log(email,password,userRole)
+        console.log(email, password, userRole)
         //Validation
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             toast.error(`Invalid email format`)
@@ -35,8 +36,18 @@ const Login = () => {
                 const { data } = await axiosSecure.post(`/jwt`, { email: user?.email })
                 console.log(data)
                 if (data) {
-                    toast.success("Logged in successfully")
-                    navigate('/')
+                    const userData = {
+                        name: user?.displayName,
+                        email: user?.email,
+                        userRole: role,
+                        time: new Date()
+                    }
+                    console.log(userData)
+                    const { data: userLoginData } = await axiosNormal.put('/user', userData)
+                    if (userLoginData) {
+                        toast.success("Login successfully")
+                        navigate('/')
+                    }
                 }
             }
         }
@@ -53,8 +64,18 @@ const Login = () => {
             const { data } = await axiosSecure.post(`/jwt`, { email: user?.email })
             console.log(data)
             if (data) {
-                toast.success("Google Login successfully")
-                navigate('/')
+                const userData = {
+                    name: user?.displayName,
+                    email: user?.email,
+                    userRole: googleRole,
+                    time: new Date()
+                }
+                console.log(userData)
+                const { data: userGoogleData } = await axiosNormal.put('/user', userData)
+                if (userGoogleData) {
+                    toast.success("Google Login successfully")
+                    navigate('/')
+                }
             }
         }
         else {
