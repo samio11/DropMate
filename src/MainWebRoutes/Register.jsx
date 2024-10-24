@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Await, Link, useNavigate } from 'react-router-dom';
 import { ImageUrl } from '../Custom_Hooks/ImgAPI';
 import axios from 'axios';
@@ -11,6 +11,8 @@ import auth from '../FireBaseFiles/Frb';
 const Register = () => {
     const { createUser } = useContext(ContextProvider)
     const navigate = useNavigate()
+        // State for role selection with 'User' as default
+        const [role, setRole] = useState('User');
     const handleCreateUser = async e => {
         e.preventDefault();
         const form = e.target;
@@ -19,23 +21,20 @@ const Register = () => {
         const password = form.password.value;
         const image = form.image.files[0];
         //Validation
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             toast.error(`Invalid email format`)
             return;
         }
-        if(!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password))
-        {
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)) {
             toast.error(`Invalid Password`)
             return;
         }
 
-        if(!name)
-        {
+        if (!name) {
             toast.error(`Name is required`)
             return;
         }
-        if(!image)
-        {
+        if (!image) {
             toast.error(`Image is required`)
             return;
         }
@@ -105,6 +104,19 @@ const Register = () => {
                                 className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 accept="image/*"
                             />
+                        </div>
+                        {/* Role Selection */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-medium">Select Role</label>
+                            <select
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                                className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="User">User</option>
+                                <option value="DeliveryMan">DeliveryMan</option>
+                                <option value="Admin">Admin</option>
+                            </select>
                         </div>
 
                         {/* Password Input */}

@@ -31,23 +31,12 @@ const Login = () => {
         }
         try {
             const { user } = await loginUser(email, password)
-            console.log(user)
             if (user) {
                 const { data } = await axiosSecure.post(`/jwt`, { email: user?.email })
                 console.log(data)
                 if (data) {
-                    const userData = {
-                        name: user?.displayName,
-                        email: user?.email,
-                        userRole: role,
-                        time: new Date()
-                    }
-                    console.log(userData)
-                    const { data: userLoginData } = await axiosNormal.put('/user', userData)
-                    if (userLoginData) {
-                        toast.success("Login successfully")
-                        navigate('/')
-                    }
+                    toast.success('Login Successfully Done')
+                    navigate('/')
                 }
             }
         }
@@ -57,25 +46,13 @@ const Login = () => {
         }
     }
     const handleGoogleLogin = async () => {
-        const googleRole = 'User'
         const { user } = await googleLogin();
         if (user) {
-            console.log(user)
             const { data } = await axiosSecure.post(`/jwt`, { email: user?.email })
             console.log(data)
             if (data) {
-                const userData = {
-                    name: user?.displayName,
-                    email: user?.email,
-                    userRole: googleRole,
-                    time: new Date()
-                }
-                console.log(userData)
-                const { data: userGoogleData } = await axiosNormal.put('/user', userData)
-                if (userGoogleData) {
-                    toast.success("Google Login successfully")
-                    navigate('/')
-                }
+                toast.success('Login Successfully with Google Done')
+                navigate('/')
             }
         }
         else {
@@ -110,7 +87,7 @@ const Login = () => {
                         </div>
 
                         {/* Role Selection */}
-                        <div className="mb-4">
+                        {/* <div className="mb-4">
                             <label className="block text-gray-700 font-medium">Select Role</label>
                             <select
                                 value={role}
@@ -121,7 +98,7 @@ const Login = () => {
                                 <option value="DeliveryMan">DeliveryMan</option>
                                 <option value="Admin">Admin</option>
                             </select>
-                        </div>
+                        </div> */}
 
                         {/* Password Input */}
                         <div className="mb-6">

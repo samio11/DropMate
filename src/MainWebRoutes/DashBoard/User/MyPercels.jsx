@@ -1,11 +1,11 @@
 import React from 'react';
 
-const SideBar = () => {
+const MyPercels = () => {
     return (
         <div>
-            This is sidebar
+            this is my Percel
         </div>
     );
 };
 
-export default SideBar;
+export default MyPercels;

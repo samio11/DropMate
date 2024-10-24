@@ -5,9 +5,11 @@ import { ContextProvider } from "../AllContext/ContextContainer";
 import { NavLink, useNavigate } from "react-router-dom";
 import { axiosSecure } from "../Custom_Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import useRole from "../Custom_Hooks/useRole";
 const Navbar = () => {
     const { user, logOutUser } = useContext(ContextProvider)
     const navigate = useNavigate();
+    const [role] = useRole()
     const navLinks = <>
         <li>
             <NavLink
@@ -96,7 +98,7 @@ const Navbar = () => {
                                 <li>
                                     <a className="justify-between italic text-sm font-semibold">
                                         {user?.displayName}
-                                        <span className="badge badge-outline text-xs text-blue-500 font-bold">{user?.role || 'User'}</span>
+                                        <span className="badge badge-outline text-xs text-blue-500 font-bold">{role || 'User'}</span>
                                     </a>
                                 </li>
                                 {navLinks}
