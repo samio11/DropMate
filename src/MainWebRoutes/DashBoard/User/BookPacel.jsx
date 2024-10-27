@@ -7,7 +7,6 @@ import L from 'leaflet';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { axiosNormal } from '../../../Custom_Hooks/useAxios';
-import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 
@@ -20,7 +19,7 @@ const BookPacel = () => {
     const [mapPosition, setMapPosition] = useState([23.8103, 90.4125]); // Default position for Dhaka
     const [startDate, setStartDate] = useState(new Date());
     const [productPrice, setProductPrice] = useState(0);
-    const navigate = useNavigate();
+    
 
     useEffect(() => {
         if (parseInt(parcelWeight) === 1) setProductPrice(50)
