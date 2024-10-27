@@ -12,12 +12,15 @@ import UpdateParcel from './UpdateParcel';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 import axios from 'axios';
+import UserPayment from './UserPayment';
 
 const MyPercels = () => {
     const { user } = useContext(ContextProvider)
     let [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
+    let [isOpenPaymentModal, setIsOpenPaymentModal] = useState(false)
     let [showReview, setShowReview] = useState(false)
     let [upDateData, setUpdateData] = useState({});
+    let [paymentBooking, setPaymentBooking] = useState({});
     const axiosSecure = useAxiosSecure();
     const { data: bookedData = [], isLoading, refetch } = useQuery({
         queryKey: ['booked'],
@@ -43,9 +46,16 @@ const MyPercels = () => {
     const closeUpdateModal = () => {
         setIsOpenUpdateModal(false)
     }
+    const closePaymentModal = () =>{
+        setIsOpenPaymentModal(false)
+    }
     const passUpdateData = e => {
         setUpdateData(e)
         setIsOpenUpdateModal(true)
+    }
+    const passPaymentData = e => {
+        setPaymentBooking(e)
+        setIsOpenPaymentModal(true)
     }
 
     const handleDelete = async (deleteId) => {
@@ -85,9 +95,6 @@ const MyPercels = () => {
         });
     }
 
-
-
-    console.log(bookedData)
     return (
         <div className='my-3'>
             <HomeSection headTxt={'My Parcels'} Desc={'Manage and track your booked parcels easily.'}></HomeSection>
@@ -136,11 +143,13 @@ const MyPercels = () => {
                                             {x.booking_status === 'delivered' && <td className='text-center'><button className='btn btn-outline btn-sm'><MdOutlineRateReview /></button></td>}
 
 
-                                            <td className='text-center'><button className='btn btn-outline btn-sm'><FaMoneyCheckDollar /></button></td>
+                                            <td onClick={()=> passPaymentData(x)} className='text-center'><button className='btn btn-outline btn-sm'><FaMoneyCheckDollar /></button></td>
 
 
                                             {/* All jsx Here */}
                                             <UpdateParcel U_data={upDateData} isOpenUpdateModal={isOpenUpdateModal} closeUpdateModal={closeUpdateModal}></UpdateParcel>
+                                            {/* Payment Data Here */}
+                                            <UserPayment paymentData={paymentBooking} isOpenPaymentModal={isOpenPaymentModal} closePaymentModal={closePaymentModal}></UserPayment>
                                         </tr>
                                     </tbody>
                                 )
