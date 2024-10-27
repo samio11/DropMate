@@ -16,6 +16,7 @@ import axios from 'axios';
 const MyPercels = () => {
     const { user } = useContext(ContextProvider)
     let [isOpenUpdateModal, setIsOpenUpdateModal] = useState(false)
+    let [showReview, setShowReview] = useState(false)
     let [upDateData, setUpdateData] = useState({});
     const axiosSecure = useAxiosSecure();
     const { data: bookedData = [], isLoading, refetch } = useQuery({
@@ -25,6 +26,19 @@ const MyPercels = () => {
             return data
         }
     })
+
+    useEffect(() => {
+        if (bookedData.length === 0) {
+            refetch()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (bookedData.length > 0) {
+            const data = bookedData.reduce(x => x.booking_status === 'delivered')
+            if (data) setShowReview(true)
+        }
+    }, [])
 
     const closeUpdateModal = () => {
         setIsOpenUpdateModal(false)
@@ -91,7 +105,7 @@ const MyPercels = () => {
                                 <th>Booking Status</th>
                                 <th>Update Booking</th>
                                 <th>Delete Booking</th>
-                                <th>Review Delivery Men</th>
+                                {showReview === true && <th>Review Delivery Man</th>}
                                 <th>Payment</th>
                             </tr>
                         </thead>
@@ -119,7 +133,7 @@ const MyPercels = () => {
                                             <td onClick={() => handleDelete(x._id)} className='text-center'><button className='btn btn-outline btn-sm'><MdDelete /></button></td>
 
 
-                                            <td className='text-center'><button className='btn btn-outline btn-sm'><MdOutlineRateReview /></button></td>
+                                            {x.booking_status === 'delivered' && <td className='text-center'><button className='btn btn-outline btn-sm'><MdOutlineRateReview /></button></td>}
 
 
                                             <td className='text-center'><button className='btn btn-outline btn-sm'><FaMoneyCheckDollar /></button></td>
